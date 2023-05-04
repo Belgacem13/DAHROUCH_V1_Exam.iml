@@ -1,3 +1,5 @@
+//DAHROUCH Belgacem
+
 import PaqPort.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -31,6 +33,9 @@ public class PortManagement extends JFrame {
     private JTextField countryTextField;
     private JButton ClearBtn;
     private JTextArea textArea1;
+    private JButton inspectContainersButton;
+    private JLabel inspectContainersLabel;
+
 
     public PortManagement(Port port){
 
@@ -93,6 +98,31 @@ public class PortManagement extends JFrame {
                 textArea1.setText(port.toString());
             }
         });
+
+        //Exam
+        inspectContainersButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int hubNumber;
+                if (a1RadioButton.isSelected()) {
+                    hubNumber = 1;
+                } else if (a2RadioButton.isSelected()) {
+                    hubNumber = 2;
+                } else {
+                    hubNumber = 3;
+                }
+
+                int weight = Integer.parseInt(textFieldWeight.getText());
+                String result = port.inspectContainersInHubByWeight(weight, hubNumber);
+
+                // Display the result in a new window
+                JFrame resultWindow = new JFrame("Inspection Results");
+                JTextArea resultTextArea = new JTextArea(result);
+                resultWindow.add(resultTextArea);
+                resultWindow.setSize(600, 300);
+                resultWindow.setVisible(true);
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -100,3 +130,4 @@ public class PortManagement extends JFrame {
         PortManagement ValenciaFrame = new PortManagement(Valencia);
     }
 }
+
